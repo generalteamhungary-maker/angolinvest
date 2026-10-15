@@ -533,7 +533,7 @@ const PROJECTS=[
     rooms:[['Közlekedő','6,25'],['Gardrób','2,98'],['WC','1,89'],['Szoba','9,98'],['Konyha','9,31'],['Étkező','12,37'],['Nappali','23,90'],['Szoba','10,36'],['Fürdő','5,78'],['Szülői háló','12,06'],['Gardrób','3,63'],['WC + zuhany','4,51']],outRooms:[['Terasz','5,25'],['Terasz','14,51']]},
    {no:2,floor:'1em',area:'103,02',out:'18,57 m² erkély',price:null,sold:true,
     rooms:[['Közlekedő','6,25'],['Gardrób','2,98'],['WC','1,89'],['Szoba','9,98'],['Konyha','9,31'],['Étkező','12,37'],['Nappali','23,90'],['Szoba','10,36'],['Fürdő','5,78'],['Szülői háló','12,06'],['Gardrób','3,63'],['WC + zuhany','4,51']],outRooms:[['Erkély','4,92'],['Erkély','13,65']]},
-   {no:3,floor:'teto',area:'44,47',out:'23,42 m² erkély + terasz',price:139000000,sold:false,
+   {no:3,floor:'teto',area:'44,55',out:'23,42 m² erkély + terasz',price:139000000,sold:false,
     rooms:[['Előtér','3,87'],['Konyha','4,48'],['Nappali','19,61'],['Szoba','11,73'],['Zuhanyzó + WC','4,78']],outRooms:[['Erkély','4,92'],['Terasz','18,50']]}
   ],
   extras:[['Gépkocsibeálló','P-1 (kisméretű)','12 000 000 Ft'],['Gépkocsibeálló','P-2 – P-4','15 000 000 Ft'],['Tároló','T/01 – T/04','3 100 000 Ft / db']],
@@ -629,7 +629,7 @@ function selectFlat(pid,no){
     ${f.note?`<p class="d-note">${esc(f.note)}</p>`:''}
     <table class="rooms"><thead><tr><th>Helyiség</th><th class="r">m²</th></tr></thead><tbody>
       ${f.rooms.map(r=>`<tr><td>${esc(r[0])}</td><td class="r">${r[1]}</td></tr>`).join('')}
-      <tr class="tot"><td>Nettó összesen</td><td class="r">${sum.toFixed(2).replace('.',',')}</td></tr>
+      <tr class="tot"><td>Nettó összesen</td><td class="r">${esc(f.total||f.area)}</td></tr>
       ${f.outRooms.map(r=>`<tr class="out"><td>${esc(r[0])}</td><td class="r">${r[1]}</td></tr>`).join('')}
     </tbody></table>
     <div class="d-actions">
@@ -673,7 +673,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');i
 
 /* file attachments */
 /* Az űrlap a Google Apps Script webalkalmazásnak küld (Angol Invest – weboldal űrlap). */
-const GAS_URL='GAS_URL_HELYE';
+const GAS_URL='https://script.google.com/macros/s/AKfycby2jK2_dH9yRAtoiTkzeDQzth_BrXUv--jUKEBKadqtnKDJ57zHtRg7SXvikdD_wjJf/exec';
 const MAXF=15*1024*1024,MAXT=20*1024*1024,MAXN=5;let files=[];
 const fz=document.getElementById('dropzone'),fi=document.getElementById('files'),fl=document.getElementById('filelist'),fe=document.getElementById('fileerr');
 const kb=n=>n>1048576?(n/1048576).toFixed(1).replace('.',',')+' MB':Math.max(1,Math.round(n/1024))+' kB';
