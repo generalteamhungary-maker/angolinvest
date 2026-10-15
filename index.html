@@ -503,8 +503,8 @@ const PROJECTS=[
     rooms:[['Előszoba','4,06'],['WC','1,23'],['Fürdő','5,60'],['Szoba','11,81'],['Gardrób, közlekedő','4,10'],['Nappali','18,38'],['Étkező','4,06'],['Konyha','8,71']],outRooms:[['Erkély','13,17']]},
    {no:3,floor:'1em',area:'53,61',out:'7,75 m² erkély',price:138000000,sold:true,
     rooms:[['Előszoba','3,55'],['WC','1,80'],['Fürdő','4,50'],['Szoba','14,16'],['Konyha','5,60'],['Étkező','5,50'],['Nappali','17,92']],outRooms:[['Erkély','7,75']]},
-   {no:4,floor:'2em',area:'83,00',gallery:'17,61',total:'100,61',out:'28,92 m² terasz',price:287500000,sold:false,
-    note:'Az alaprajzon a galéria opcionális szoba + fürdő kialakítása is látható.',rooms:[['Előszoba','2,08'],['WC','1,21'],['Konyha','6,64'],['Étkező','7,22'],['Nappali','24,13'],['Szoba','12,78'],['Fürdő','7,95'],['Szoba','16,27'],['Gardrób','4,72'],['Galéria / dolgozó','17,61']],outRooms:[['Terasz','28,92']]}
+   {no:4,floor:'2em',area:'111,04',galeria:true,out:'28,92 m² terasz',price:287500000,sold:false,
+    note:'Az alapterület a galérián kialakított szoba + fürdő opcióval értendő.',rooms:[['Előszoba','2,08'],['WC','1,21'],['Konyha','6,64'],['Étkező','7,22'],['Nappali','24,13'],['Szoba','12,78'],['Fürdő','7,95'],['Szoba','16,27'],['Gardrób','4,72'],['Galéria / dolgozó','17,61'],['Fürdő (galéria)','4,09'],['Szoba (galéria)','6,34']],outRooms:[['Terasz','28,92']]}
   ],
   extras:[['Gépkocsibeálló','P-1 – P-6','15 000 000 Ft'],['Tároló','T/01 – T/04','3 000 000 Ft / db']],
   spec:[['Szerkezet','Vasbeton lemezalap és födémek, 30 cm vázkerámia falazat, 10 cm homlokzati hőszigetelés, cserépfedésű magastető.'],['Nyílászárók','3 rétegű üvegezésű, 6 légkamrás műanyag ablakok; motoros alumínium redőny, rolós szúnyogháló; MABISZ minősített bejárati ajtó.'],['Fűtés, hűtés','Lakásonkénti levegő-víz hőszivattyú, padlófűtés, mennyezeti hűtés, helyiségenkénti termosztát.'],['Burkolatok','Kerámia burkolat (60×60 cm-ig, 11 000 Ft/m² anyagár), laminált parketta (9 000 Ft/m²), fagyálló teraszburkolat.'],['Szaniterek','Laufen Pro mosdók és WC, Geberit Duofix, Ravak kád, Hansgrohe Logis csaptelepek.'],['Gyengeáram','Helyiségenként TV és internet, videós kaputelefon, riasztó előkészítés.'],['Parkolás','Pinceszinti teremgarázs, beállónként 1 távirányító.']]
@@ -541,7 +541,7 @@ const sfx=n=>n+'-'+({1:'es',2:'es',3:'as',4:'es',5:'ös',6:'os',7:'es',8:'as',9:
 const areaTxt=f=>f.gallery?`${f.area} m² + ${f.gallery} m² galéria`:`${f.area} m²`;
 const fmtFt=n=>n==null?'–':n.toLocaleString('hu-HU').replace(/ /g,' ')+' Ft';
 const num=s=>parseFloat(String(s).split(' ')[0].replace(',','.'));
-const roomCount=f=>{const r=f.rooms.filter(x=>/^(Szoba|Nappali|Szülői háló)$/.test(x[0]));const sz=r.filter(x=>x[0]!=='Nappali').length,n=r.some(x=>x[0]==='Nappali');return (n?'Nappali + ':'')+sz+' szoba'+(f.gallery?' + galéria':'')};
+const roomCount=f=>{const r=f.rooms.filter(x=>/^(Szoba|Nappali|Szülői háló)\b/.test(x[0]));const sz=r.filter(x=>x[0]!=='Nappali').length,n=r.some(x=>x[0]==='Nappali');return (n?'Nappali + ':'')+sz+' szoba'+(f.gallery||f.galeria?' + galéria':'')};
 const floorLabel=(p,id)=>p.floors.find(x=>x.id===id).label;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -570,7 +570,7 @@ function renderProjects(){
       <div class="flatlist" role="listbox" aria-label="${esc(p.name)} lakásai">
         ${p.flats.map(f=>`<button type="button" class="flat${f.sold?' is-sold':''}" role="option" data-p="${p.id}" data-no="${f.no}">
           <span class="flat-no">${f.no}</span>
-          <span class="flat-main"><strong>${sfx(f.no)} lakás</strong> <small>${esc(floorLabel(p,f.floor))}, ${esc(f.total||f.area)} m²${f.gallery?' (galériával)':''}, ${esc(f.out)}</small> <small class="fp">${f.sold?'':fmtFt(f.price)}</small></span>
+          <span class="flat-main"><strong>${sfx(f.no)} lakás</strong> <small>${esc(floorLabel(p,f.floor))}, ${esc(f.total||f.area)} m²${f.gallery||f.galeria?' (galériával)':''}, ${esc(f.out)}</small> <small class="fp">${f.sold?'':fmtFt(f.price)}</small></span>
           <span class="flat-side">${f.sold?'<span class="pill sold">Elkelt</span>':'<span class="pill ok">Eladó</span>'}</span>
         </button>`).join('')}
       </div>
