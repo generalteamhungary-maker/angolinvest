@@ -259,6 +259,19 @@ table.rooms tr.out td{color:var(--muted)}
 .lb-stage:active{cursor:grabbing}
 .lb-stage img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;user-select:none}
 .lb-hint{color:#aaa;font-size:.78rem;text-align:center;padding:8px}
+.lb.photos .lb-stage{background:#141414}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:52px;height:72px;border:0;background:rgba(0,0,0,.45);color:#fff;font:300 2.6rem/1 var(--f-head);cursor:pointer}
+.lb-nav:hover{background:rgba(0,0,0,.7)}
+.lb-nav.prev{left:0}.lb-nav.next{right:0}
+#lbCount{color:#aaa;font-weight:400;margin-left:10px}
+/* reference cards & gallery */
+.ref{cursor:pointer;text-align:left;background:none;border:0;padding:0;font:inherit;color:inherit}
+.ref .photo{position:relative}
+.ref:hover .photo img,.gallery figure:hover img{filter:brightness(1.06)}
+.ref .more{display:inline-block;margin-top:8px;font:600 .75rem var(--f-head);text-transform:uppercase;letter-spacing:.08em;color:var(--ink);border-bottom:1px solid var(--ink)}
+.gallery figure{cursor:zoom-in}
+.gallery button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.badge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.65);color:#fff;font:600 .7rem var(--f-head);letter-spacing:.06em;padding:5px 9px;text-transform:uppercase}
 /* attachments */
 .field{display:grid;gap:6px}
 .flabel{font:600 .8rem var(--f-head);color:var(--ink)}
@@ -400,53 +413,22 @@ table.rooms tr.out td{color:var(--muted)}
       <button type="button" id="lbClose" aria-label="Bezárás">✕</button>
     </div>
   </div>
-  <div class="lb-stage" id="lbStage"><img id="lbImg" alt="" draggable="false"></div>
-  <div class="lb-hint">Görgetéssel vagy a +/− gombokkal nagyít, húzással mozgat.</div>
+  <div class="lb-stage" id="lbStage"><img id="lbImg" alt="" draggable="false">
+    <button type="button" class="lb-nav prev" id="lbPrev" aria-label="Előző kép" hidden>‹</button>
+    <button type="button" class="lb-nav next" id="lbNext" aria-label="Következő kép" hidden>›</button>
+  </div>
+  <div class="lb-hint" id="lbHint">Görgetéssel vagy a +/− gombokkal nagyít, húzással mozgat.</div>
 </div>
 
 <section class="block" id="referenciak"><div class="wrap">
   <div class="label">Munkáink</div>
   <h2 style="margin-top:12px">Referenciák</h2>
   <div class="rule"></div>
-  <div class="refs">
-    <div class="ref"><div class="photo"><img src="img/cat-tarsashaz.jpg" alt=""></div><h3>Társasházak</h3><p>35 megépített társasház Budán.</p></div>
-    <div class="ref"><div class="photo"><img src="img/cat-gazdasagi.jpg" alt=""></div><h3>Gazdasági épületek</h3><p>Lavet gyógyszergyár (Kistarcsa), logisztikai épületek.</p></div>
-    <div class="ref"><div class="photo"><img src="img/cat-csaladi.jpg" alt=""></div><h3>Családi házak</h3><p>Egyedi családi házak generálkivitelezése, pl. Bodajk utca.</p></div>
-    <div class="ref"><div class="photo"><img src="img/cat-szerkezet.jpg" alt=""></div><h3>Szerkezetépítés</h3><p>Vasbeton szerkezetek, pl. SOHO Hotel, 68 szoba.</p></div>
-  </div>
+  <div class="refs" id="refCats"></div>
   <h3 class="gal-title">Társasházaink</h3>
-  <div class="gallery">
-    <figure><img src="img/ref-brasso-ut.jpg" alt="Brassó út, háromlakásos társasház"><figcaption>Brassó út</figcaption></figure>
-    <figure><img src="img/ref-martonhegyi-1.jpg" alt="Mártonhegyi út, társasház"><figcaption>Mártonhegyi út</figcaption></figure>
-    <figure><img src="img/ref-martonhegyi-2.jpg" alt="Mártonhegyi út, társasház kertfelőli homlokzata"><figcaption>Mártonhegyi út</figcaption></figure>
-    <figure><img src="img/ref-kanizsai.jpg" alt="Kanizsai utca"><figcaption>Kanizsai utca</figcaption></figure>
-    <figure><img src="img/ref-olt.jpg" alt="Olt utca"><figcaption>Olt utca</figcaption></figure>
-    <figure><img src="img/ref-oltvany.jpg" alt="Oltvány utca"><figcaption>Oltvány utca</figcaption></figure>
-    <figure><img src="img/ref-ilosvai.jpg" alt="Ilosvai Selymes utca"><figcaption>Ilosvai Selymes utca</figcaption></figure>
-    <figure><img src="img/ref-radvany.jpg" alt="Radvány utca"><figcaption>Radvány utca</figcaption></figure>
-    <figure><img src="img/ref-martonhegyi.jpg" alt="Puskás Tivadar utca"><figcaption>Puskás Tivadar utca</figcaption></figure>
-    <figure><img src="img/ref-facsemete.jpg" alt="Facsemete utca"><figcaption>Facsemete utca</figcaption></figure>
-    <figure><img src="img/ref-kanyakapu1.jpg" alt="Kányakapu utca"><figcaption>Kányakapu utca</figcaption></figure>
-    <figure><img src="img/ref-kanyakapu2.jpg" alt="Kányakapu utca"><figcaption>Kányakapu utca</figcaption></figure>
-    <figure><img src="img/ref-kanyakapu3.jpg" alt="Kányakapu utca"><figcaption>Kányakapu utca</figcaption></figure>
-    <figure><img src="img/ref-nagyida.jpg" alt="Nagyida utca"><figcaption>Nagyida utca</figcaption></figure>
-    <figure><img src="img/ref-beregszasz.jpg" alt="Beregszász út"><figcaption>Beregszász út</figcaption></figure>
-    <figure><img src="img/ref-brasso.jpg" alt="Brassó utca"><figcaption>Brassó utca</figcaption></figure>
-    <figure><img src="img/ref-denever.jpg" alt="Denevér utca"><figcaption>Denevér utca</figcaption></figure>
-    <figure><img src="img/ref-jozsefattila.jpg" alt="József Attila utca"><figcaption>József Attila utca</figcaption></figure>
-    <figure><img src="img/ref-lanka.jpg" alt="Lanka utca"><figcaption>Lanka utca</figcaption></figure>
-    <figure><img src="img/ref-karolyi.jpg" alt="Károlyi utca"><figcaption>Károlyi utca</figcaption></figure>
-    <figure><img src="img/ref-pannonhalmi1.jpg" alt="Pannonhalmi út"><figcaption>Pannonhalmi út</figcaption></figure>
-    <figure><img src="img/ref-muskotaly.jpg" alt="Muskotály utca"><figcaption>Muskotály utca</figcaption></figure>
-    <figure><img src="img/ref-bodpeter.jpg" alt="Bod Péter utca"><figcaption>Bod Péter utca</figcaption></figure>
-    <figure><img src="img/ref-pannonhalmi2.jpg" alt="Pannonhalmi út"><figcaption>Pannonhalmi út</figcaption></figure>
-    <figure><img src="img/ref-pannonhalmi3.jpg" alt="Pannonhalmi út"><figcaption>Pannonhalmi út</figcaption></figure>
-    <figure><img src="img/ref-olt2.jpg" alt="Olt utca"><figcaption>Olt utca</figcaption></figure>
-  </div>
+  <div class="gallery" id="galTarsashaz"></div>
   <h3 class="gal-title">Családi házak</h3>
-  <div class="gallery">
-    <figure><img src="img/ref-bodajk.jpg" alt="Bodajk utca"><figcaption>Bodajk utca</figcaption></figure>
-  </div>
+  <div class="gallery" id="galCsaladi"></div>
   <div class="clients">
     <span class="label">Megrendelőink közül</span>
     <span>Csepeli Szabadkikötő</span><span>BSZL Logisztika</span><span>Masped Logisztika</span><span>Állatorvosi Egyetem</span><span>Lavet Gyógyszergyár</span>
@@ -644,30 +626,83 @@ function selectFlat(pid,no){
   art.querySelector('.d-plan').addEventListener('click',()=>{const im=art.querySelector('.plan-img img');openLb(im.src,`${p.name} – ${sfx(f.no)} lakás, ${floorLabel(p,f.floor)}`)});
 }
 
+/* referenciák */
+const REF_CATS=[
+ {id:'tarsashaz',t:'Társasházak',d:'35 megépített társasház Budán.',img:'img/cat-tarsashaz.jpg'},
+ {id:'gazdasagi',t:'Gazdasági épületek',d:'Lavet gyógyszergyár (Kistarcsa), logisztikai épületek.',img:'img/cat-gazdasagi.jpg'},
+ {id:'csaladi',t:'Családi házak',d:'Egyedi családi házak generálkivitelezése, pl. Bodajk utca.',img:'img/cat-csaladi.jpg'},
+ {id:'szerkezet',t:'Szerkezetépítés',d:'Vasbeton szerkezetek, pl. SOHO Hotel, 68 szoba.',img:'img/cat-szerkezet.jpg'}];
+const REFS=[
+ {c:'tarsashaz',n:'Brassó út',p:['ref-brasso-ut']},
+ {c:'tarsashaz',n:'Mártonhegyi út',p:['ref-martonhegyi-1','ref-martonhegyi-2']},
+ {c:'tarsashaz',n:'Kanizsai utca',p:['ref-kanizsai']},
+ {c:'tarsashaz',n:'Olt utca',p:['ref-olt']},
+ {c:'tarsashaz',n:'Oltvány utca',p:['ref-oltvany']},
+ {c:'tarsashaz',n:'Ilosvai Selymes utca',p:['ref-ilosvai']},
+ {c:'tarsashaz',n:'Radvány utca',p:['ref-radvany']},
+ {c:'tarsashaz',n:'Puskás Tivadar utca',p:['ref-martonhegyi']},
+ {c:'tarsashaz',n:'Facsemete utca',p:['ref-facsemete']},
+ {c:'tarsashaz',n:'Kányakapu utca',p:['ref-kanyakapu1']},
+ {c:'tarsashaz',n:'Kányakapu utca',p:['ref-kanyakapu2']},
+ {c:'tarsashaz',n:'Kányakapu utca',p:['ref-kanyakapu3']},
+ {c:'tarsashaz',n:'Nagyida utca',p:['ref-nagyida']},
+ {c:'tarsashaz',n:'Beregszász út',p:['ref-beregszasz']},
+ {c:'tarsashaz',n:'Brassó utca',p:['ref-brasso']},
+ {c:'tarsashaz',n:'Denevér utca',p:['ref-denever']},
+ {c:'tarsashaz',n:'József Attila utca',p:['ref-jozsefattila']},
+ {c:'tarsashaz',n:'Lanka utca',p:['ref-lanka']},
+ {c:'tarsashaz',n:'Károlyi utca',p:['ref-karolyi']},
+ {c:'tarsashaz',n:'Pannonhalmi út',p:['ref-pannonhalmi1']},
+ {c:'tarsashaz',n:'Muskotály utca',p:['ref-muskotaly']},
+ {c:'tarsashaz',n:'Bod Péter utca',p:['ref-bodpeter']},
+ {c:'tarsashaz',n:'Pannonhalmi út',p:['ref-pannonhalmi2']},
+ {c:'tarsashaz',n:'Pannonhalmi út',p:['ref-pannonhalmi3']},
+ {c:'tarsashaz',n:'Olt utca',p:['ref-olt2']},
+ {c:'csaladi',n:'Bodajk utca',p:['ref-bodajk']},
+ {c:'csaladi',n:'Olt utca 26.',p:['cat-csaladi']},
+ {c:'gazdasagi',n:'Lavet gyógyszergyár, Kistarcsa',p:['cat-gazdasagi']},
+ {c:'szerkezet',n:'SOHO Hotel, Budapest – 68 szobás szálloda vasbeton szerkezete',p:['cat-szerkezet']}];
+const catPhotos=c=>REFS.filter(r=>r.c===c).flatMap(r=>r.p.map((x,i)=>({src:'img/'+x+'.jpg',cap:r.n+(r.p.length>1?` (${i+1}/${r.p.length})`:'')})));
+function renderRefs(){
+  document.getElementById('refCats').innerHTML=REF_CATS.map(c=>{const n=catPhotos(c.id).length;return `<button type="button" class="ref" data-cat="${c.id}"><div class="photo"><img src="${c.img}" alt="${esc(c.t)}"><span class="badge">${n} fotó</span></div><h3>${esc(c.t)}</h3><p>${esc(c.d)}</p><span class="more">Fotók megtekintése</span></button>`}).join('');
+  const gal=(el,cat)=>{let k=0;document.getElementById(el).innerHTML=REFS.filter(r=>r.c===cat).map(r=>{const start=k;k+=r.p.length;return `<figure><button type="button" data-cat="${cat}" data-i="${start}" aria-label="${esc(r.n)} fotói"><img src="img/${r.p[0]}.jpg" alt="${esc(r.n)}" loading="lazy">${r.p.length>1?`<span class="badge">${r.p.length} fotó</span>`:''}</button><figcaption>${esc(r.n)}</figcaption></figure>`}).join('')};
+  gal('galTarsashaz','tarsashaz');gal('galCsaladi','csaladi');
+  document.querySelectorAll('#referenciak [data-cat]').forEach(b=>b.addEventListener('click',()=>openGallery(b.dataset.cat,+(b.dataset.i||0))));
+}
 /* lightbox */
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),stage=document.getElementById('lbStage');
 let z={s:1,x:0,y:0,min:1};let lastFocus=null;
 function applyZ(){lbImg.style.transform=`translate(${z.x}px,${z.y}px) scale(${z.s})`}
 function fit(){const r=stage.getBoundingClientRect(),w=lbImg.naturalWidth||1,h=lbImg.naturalHeight||1;z.min=Math.min(r.width/w,r.height/h);z.s=z.min;z.x=(r.width-w*z.s)/2;z.y=(r.height-h*z.s)/2;applyZ()}
 function zoomAt(f,cx,cy){const ns=Math.min(Math.max(z.s*f,z.min),z.min*8);const k=ns/z.s;z.x=cx-(cx-z.x)*k;z.y=cy-(cy-z.y)*k;z.s=ns;applyZ()}
-function openLb(src,title){lastFocus=document.activeElement;document.getElementById('lbTitle').textContent=title;lb.hidden=false;document.body.style.overflow='hidden';lbImg.onload=fit;lbImg.src=src;if(lbImg.complete)fit();document.getElementById('lbClose').focus()}
+let seq=null,seqI=0,seqT='';
+function showSeq(){const x=seq[seqI];document.getElementById('lbTitle').innerHTML=esc(seqT+' – '+x.cap)+`<span id="lbCount">${seqI+1} / ${seq.length}</span>`;lbImg.alt=x.cap;lbImg.onload=fit;lbImg.src=x.src;if(lbImg.complete&&lbImg.naturalWidth)fit()}
+function navSeq(d){if(!seq||seq.length<2)return;seqI=(seqI+d+seq.length)%seq.length;showSeq()}
+function openGallery(cat,i){const c=REF_CATS.find(x=>x.id===cat);seq=catPhotos(cat);seqI=i||0;seqT=c.t;lastFocus=document.activeElement;lb.classList.add('photos');lb.hidden=false;document.body.style.overflow='hidden';['lbPrev','lbNext'].forEach(id=>document.getElementById(id).hidden=seq.length<2);document.getElementById('lbHint').textContent='Lapozás: nyilak vagy húzás oldalra · nagyítás: görgetés, +/− vagy dupla kattintás';showSeq();document.getElementById('lbClose').focus()}
+function openLb(src,title){seq=null;lb.classList.remove('photos');['lbPrev','lbNext'].forEach(id=>document.getElementById(id).hidden=true);document.getElementById('lbHint').textContent='Görgetéssel vagy a +/− gombokkal nagyít, húzással mozgat.';lastFocus=document.activeElement;document.getElementById('lbTitle').textContent=title;lb.hidden=false;document.body.style.overflow='hidden';lbImg.onload=fit;lbImg.src=src;if(lbImg.complete)fit();document.getElementById('lbClose').focus()}
 function closeLb(){lb.hidden=true;document.body.style.overflow='';lastFocus&&lastFocus.focus()}
 document.getElementById('lbClose').onclick=closeLb;
+document.getElementById('lbPrev').onclick=e=>{e.stopPropagation();navSeq(-1)};
+document.getElementById('lbNext').onclick=e=>{e.stopPropagation();navSeq(1)};
+['lbPrev','lbNext'].forEach(id=>document.getElementById(id).addEventListener('pointerdown',e=>e.stopPropagation()));
 document.getElementById('lbFit').onclick=fit;
 const mid=()=>{const r=stage.getBoundingClientRect();return[r.width/2,r.height/2]};
 document.getElementById('lbIn').onclick=()=>zoomAt(1.5,...mid());
 document.getElementById('lbOut').onclick=()=>zoomAt(1/1.5,...mid());
 stage.addEventListener('wheel',e=>{e.preventDefault();const r=stage.getBoundingClientRect();zoomAt(e.deltaY<0?1.2:1/1.2,e.clientX-r.left,e.clientY-r.top)},{passive:false});
 let drag=null;const pts=new Map();
-stage.addEventListener('pointerdown',e=>{stage.setPointerCapture(e.pointerId);pts.set(e.pointerId,[e.clientX,e.clientY]);drag={x:e.clientX,y:e.clientY,d:null}});
+stage.addEventListener('pointerdown',e=>{stage.setPointerCapture(e.pointerId);pts.set(e.pointerId,[e.clientX,e.clientY]);drag={x:e.clientX,y:e.clientY,d:null,s0:z.s,multi:pts.size>1}});
 stage.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;const prev=pts.get(e.pointerId);pts.set(e.pointerId,[e.clientX,e.clientY]);
   if(pts.size===2){const [a,b]=[...pts.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(drag.d){const r=stage.getBoundingClientRect();zoomAt(d/drag.d,(a[0]+b[0])/2-r.left,(a[1]+b[1])/2-r.top)}drag.d=d;return}
   z.x+=e.clientX-prev[0];z.y+=e.clientY-prev[1];applyZ()});
-['pointerup','pointercancel'].forEach(t=>stage.addEventListener(t,e=>{pts.delete(e.pointerId);if(pts.size<2&&drag)drag.d=null}));
+['pointerup','pointercancel'].forEach(t=>stage.addEventListener(t,e=>{pts.delete(e.pointerId);if(drag&&pts.size>0)drag.multi=true;
+  if(t==='pointerup'&&seq&&drag&&!drag.multi&&pts.size===0&&drag.s0<=z.min*1.02){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)){navSeq(dx<0?1:-1);return}fit()}
+  if(pts.size<2&&drag)drag.d=null}));
 stage.addEventListener('dblclick',e=>{const r=stage.getBoundingClientRect();zoomAt(2,e.clientX-r.left,e.clientY-r.top)});
-document.addEventListener('keydown',e=>{if(lb.hidden)return;if(e.key==='Escape')closeLb();if(e.key==='+'||e.key==='=')zoomAt(1.5,...mid());if(e.key==='-')zoomAt(1/1.5,...mid())});
+document.addEventListener('keydown',e=>{if(lb.hidden)return;if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')navSeq(1);if(e.key==='ArrowLeft')navSeq(-1);if(e.key==='+'||e.key==='=')zoomAt(1.5,...mid());if(e.key==='-')zoomAt(1/1.5,...mid())});
 window.addEventListener('resize',()=>{if(!lb.hidden)fit()});
 renderProjects();
+renderRefs();
 /* mindig az oldal tetején nyíljon meg; a belső linkek ne írják át a címsort */
 try{history.scrollRestoration='manual'}catch(_){}
 if(location.hash){try{history.replaceState(null,'',location.pathname+location.search)}catch(_){}}
