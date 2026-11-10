@@ -87,9 +87,16 @@ js = s[s.find('<script>') + 8:s.rfind('</script>')]
 INTRO1 = ('Négylakásos, új építésű társasház Sasad csendes, zöld utcájában, 2027-es átadással. '
           'Minden lakás önálló albetét, így saját otthonnak és befektetésnek is jó választás. '
           'Jó tájolás, átgondolt alaprajzok; a belső elrendezésen és a burkolatokon még lehet módosítani.')
+INTRO3 = ('Új, háromlakásos társasház Sasad csendes utcájában, pinceszinti teremgarázzsal és 2028 eleji átadással. '
+          'Két tágas, négyszobás családi lakás – a földszinti télikerttel, az emeleti terasszal és erkéllyel – '
+          'és egy kétszobás, teraszos lakás a II. emeleten. Minden lakás önálló albetét.')
 INTRO2 = ('Háromszintes, liftes társasház három lakással, Sasad egyik csendes zsákutcájában. '
           'Korszerű, alacsony fenntartási költségű gépészet; a belső kialakítás és a burkolatok igény szerint választhatók.')
 
+js = js.replace("gtOnly:true,", "")
+js = re.sub(r"id:'baradla6',name:'[^']*',eyebrow:'[^']*',address:'[^']*'",
+            "id:'p3',name:'Sasadi teremgarázsos társasház – 3 lakás',eyebrow:'Új projekt',address:'Budapest XI., Sasad'", js)
+js = re.sub(r"(id:'p3'.*?intro:)'[^']*'", lambda m: m.group(1) + repr(INTRO3).replace('"', "'"), js, count=1, flags=re.S)
 js = re.sub(r"id:'baradla',name:'[^']*',eyebrow:'[^']*',address:'[^']*'",
             "id:'p1',name:'Sasadi társasház – 4 lakás',eyebrow:'Építés alatt',address:'Budapest XI., Sasad'", js)
 js = re.sub(r"id:'lanka',name:'[^']*',eyebrow:'[^']*',address:'[^']*'",
@@ -106,6 +113,9 @@ def img(src_rel, new):
     return f'{DIR}/{new}'
 for fl in ['pince', 'fsz', '1em', '2em']:
     js = rep(js, f"'img/baradla-{fl}.jpg'", f"'{img('gt/baradla-'+fl+'.jpg', 'p1-'+fl+'.jpg')}'")
+for fl in ['pince', 'fsz', '1em', '2em']:
+    js = rep(js, f"'img/b6-{fl}.jpg'", f"'{img('gt/b6-'+fl+'.jpg', 'p3-'+fl+'.jpg')}'")
+js = rep(js, "img:'img/b6.jpg'", f"img:'{img('b6.jpg', 'p3.jpg')}'")
 for fl in ['pince', 'fsz', '1em', 'teto']:
     js = rep(js, f"'img/lanka-{fl}.jpg'", f"'{img('gt/lanka-'+fl+'.jpg', 'p2-'+fl+'.jpg')}'")
 js = rep(js, "img:'img/baradla.jpg'", f"img:'{img('baradla.jpg', 'p1.jpg')}'")
@@ -248,13 +258,17 @@ main = f'''<div class="phero"><div class="grid-bg" aria-hidden="true"></div><div
 head_title = '<title>Új lakások Budán, Sasadon – eladó új építésű lakások | GeneralTeam</title>'
 desc = ('<meta name="description" content="Új építésű, kulcsrakész lakások Budapest XI. kerületében, Sasadon: alaprajzok, '
         'helyiséglisták, árak. Érdeklődés és megtekintés a GeneralTeamnél – generálkivitelezés tervezéstől a kulcsátadásig.">\n'
-        '<link rel="canonical" href="https://generalteam.hu/uj-lakasok.html">\n'
-        '<meta property="og:title" content="Új lakások Budán, Sasadon | GeneralTeam">\n'
-        '<meta property="og:type" content="website"><meta property="og:url" content="https://generalteam.hu/uj-lakasok.html">\n'
-        f'<meta property="og:image" content="https://generalteam.hu/{DIR}/p1.jpg">')
+        '')
 page = tpl
 page = re.sub(r'<title>.*?</title>', head_title, page, count=1)
 page = re.sub(r'<meta name="description"[^>]*>', desc, page, count=1)
+# SEO-blokk: a sablon (belsőépítészet) sajátját kivesszük, a meglévő uj-lakasok.html-ét megtartjuk
+page = re.sub(r'<!--seo-->.*?<!--/seo-->', '', page, flags=re.S)
+_old = os.path.join(OUT, 'uj-lakasok.html')
+_m = re.search(r'<!--seo-->.*?<!--/seo-->', open(_old, encoding='utf-8').read(), re.S) if os.path.exists(_old) else None
+if _m:
+    page = page.replace('</head>', _m.group(0) + '\n</head>', 1)
+page = page.replace(' aria-current="page"', '').replace('<a href="uj-lakasok.html">', '<a href="uj-lakasok.html" aria-current="page">')
 page = page.replace('</head>', '<style>\n' + css + '\n</style>\n</head>', 1)
 page = re.sub(r'<main id="top">.*?</main>', lambda m: '<main id="top">\n' + main + '\n</main>', page, count=1, flags=re.S)
 # sablon saját (kókai) scriptjei nem kellenek; a lábléc + évszám marad
@@ -262,6 +276,7 @@ foot_end = page.find('<script>document.getElementById("yr")')
 foot_end = page.find('</script>', foot_end) + 9
 page = page[:foot_end] + '\n<script>\n' + js + '\n</script>\n</body>\n</html>\n'
 page = page.replace('<a class="btn brass" href="#ajanlatkeres">', '<a class="btn brass" href="#kapcsolat">')
+page = re.sub(r'(<div class="mcta">.*?<a class="btn brass" href=")[^"]*(")', r'\1#kapcsolat\2', page, count=1, flags=re.S)
 for bad in ['angolinvest', 'Angol Invest', 'Baradla', 'Lanka utca 17', '226 47 35', 'Kókai Zsófia', 'id="kfr"']:
     assert bad not in page, 'tiltott szöveg az oldalon: ' + bad
 
