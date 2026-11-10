@@ -111,7 +111,8 @@ tr.sold td.price{text-decoration:line-through;text-decoration-color:var(--sold)}
 .extras{display:grid;grid-template-columns:1fr 1fr}
 .extras div{padding:16px 24px;font-size:.9rem}
 .extras div + div{border-left:1px solid var(--line)}
-.pnote{margin:0;padding:12px 24px;border-top:1px solid var(--line)}
+.pnote{max-width:none;margin:0;padding:14px 24px;border-top:1px solid var(--line);font-size:.9rem}
+.phead{font-weight:600;color:var(--ink)}
 .extras b{display:block;font:600 .68rem var(--f-label);text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:2px}
 .note{font-size:.82rem;color:var(--muted);margin-top:20px}
 .plans{border-top:1px solid var(--line);padding:20px 24px 24px}
@@ -476,20 +477,20 @@ table.rooms tr.out td{color:var(--muted)}
 <script>
 const PROJECTS=[
  {id:'baradla6',gtOnly:true,name:'Baradla utca 6.',eyebrow:'Új projekt',address:'1112 Budapest, Baradla utca 6.',handover:'2028. I. negyedév',img:'img/b6.jpg',imgPos:'center',imgAlt:'földszinti alaprajz',
-  intro:'Új, háromlakásos társasház Sasad csendes utcájában, pinceszinti teremgarázzsal. Két tágas, négyszobás családi lakás – a földszinti télikerttel, az emeleti terasszal és erkéllyel – és egy kétszobás, teraszos lakás a II. emeleten. Minden lakás külön albetét.',
-  features:[['car','Teremgarázs','5 gépkocsibeálló a pinceszinten'],['heat','Hőszivattyú','Energiatakarékos gépészet'],['sun','Télikert, terasz','Minden lakáshoz saját kültér'],['bath','Két fürdőszoba','A négyszobás lakásokban fürdő + zuhanyzós fürdő és külön WC']],
-  floors:[{id:'pince',label:'Pinceszint (teremgarázs)',plan:'img/b6-pince.jpg'},{id:'fsz',label:'Földszint',plan:'img/b6-fsz.jpg'},{id:'1em',label:'I. emelet',plan:'img/b6-1em.jpg'},{id:'2em',label:'II. emelet',plan:'img/b6-2em.jpg'}],
+  intro:'Három lakás, gépkocsi parkolási lehetőséggel az épület alatt elhelyezkedő pinceszinten. Tervezett átadás: 2028. I. negyedév.',
+  features:[],
+  floors:[{id:'pince',label:'Pinceszint',plan:'img/b6-pince.jpg'},{id:'fsz',label:'Földszint',plan:'img/b6-fsz.jpg'},{id:'1em',label:'I. emelet',plan:'img/b6-1em.jpg'},{id:'2em',label:'II. emelet',plan:'img/b6-2em.jpg'}],
   flats:[
-   {no:1,floor:'fsz',area:'101,07',out:'21,08 m² terasz + télikert',price:289000000,sold:false,
-    rooms:[['Előtér','3,34'],['Gardrób','4,85'],['Konyha','12,30'],['Étkező','12,90'],['Nappali','18,04'],['Szoba','10,02'],['Háztartási helyiség','5,00'],['Közlekedő','1,86'],['WC','1,44'],['Fürdő','5,13'],['Szoba','10,72'],['Szoba','12,79'],['Fürdő','2,68']],outRooms:[['Télikert (fűtetlen)','11,33'],['Terasz','9,75']]},
-   {no:2,floor:'1em',area:'101,07',out:'21,48 m² terasz + erkély',price:289000000,sold:false,
-    rooms:[['Előtér','3,34'],['Gardrób','4,85'],['Konyha','12,30'],['Étkező','12,90'],['Nappali','18,04'],['Szoba','10,02'],['Háztartási helyiség','5,00'],['Közlekedő','1,86'],['WC','1,44'],['Fürdő','5,13'],['Szoba','10,72'],['Szoba','12,79'],['Fürdő','2,68']],outRooms:[['Fedetlen terasz','11,73'],['Erkély','9,75']]},
+   {no:1,floor:'fsz',area:'101,07',out:'21,08 m² terasz és télikert',price:289000000,sold:false,
+    rooms:[['Előtér','3,34'],['Gardrób','4,85'],['Konyha','12,30'],['Étkező','12,90'],['Nappali','18,04'],['Szoba','10,02'],['Háztartási helyiség','5,00'],['Közlekedő','1,86'],['WC','1,44'],['Fürdő','5,13'],['Szoba','10,72'],['Szoba','12,79'],['Fürdő','2,68']],outRooms:[['Terasz és télikert','21,08']]},
+   {no:2,floor:'1em',area:'101,07',out:'21,48 m² terasz és erkély',price:289000000,sold:false,
+    rooms:[['Előtér','3,34'],['Gardrób','4,85'],['Konyha','12,30'],['Étkező','12,90'],['Nappali','18,04'],['Szoba','10,02'],['Háztartási helyiség','5,00'],['Közlekedő','1,86'],['WC','1,44'],['Fürdő','5,13'],['Szoba','10,72'],['Szoba','12,79'],['Fürdő','2,68']],outRooms:[['Terasz és erkély','21,48']]},
    {no:3,floor:'2em',area:'60,15',out:'11,83 m² terasz',price:169700000,sold:false,
-    rooms:[['Előtér','5,76'],['WC','1,16'],['Fürdő','3,37'],['Tároló / háztartási helyiség','4,92'],['Konyha-étkező','5,52'],['Nappali','18,27'],['Szoba','11,30'],['Szoba','9,85']],outRooms:[['Fedetlen terasz','11,83']]}
+    rooms:[['Előtér','5,76'],['WC','1,16'],['Fürdő','3,37'],['Tároló / háztartási helyiség','4,92'],['Konyha-étkező','5,52'],['Nappali','18,27'],['Szoba','11,30'],['Szoba','9,85']],outRooms:[['Terasz','11,83']]}
   ],
-  extras:[['Gépkocsibeálló','P1','12 000 000 Ft'],['Gépkocsibeálló','P2','14 000 000 Ft'],['Gépkocsibeálló','P3, P4, P5','15 000 000 Ft / beálló']],
-  extrasNote:'A beállók a pinceszinti teremgarázsban, bruttó áron vásárolhatók.',
-  spec:null,specNote:'A lakásokhoz tartozó műszaki leírás kidolgozás alatt áll.'
+  extrasHead:'Gépkocsi parkolási lehetőségek az épület alatt elhelyezkedő pinceszinten, 3 árkategóriában érhetőek el:',
+  extras:[['P1-es parkoló','bruttó vételára 12.000.000 Ft'],['P2-es parkoló','bruttó vételára 14.000.000 Ft'],['P3-as, P4-es, P5-ös parkolók','bruttó vételára 15.000.000 Ft/beálló']],
+  spec:null,specNote:'Lakásokhoz tartozó műszaki leírás még kidolgozás alatt van.'
  },
  {id:'baradla',name:'Baradla utca 3.',eyebrow:'Legújabb projekt',address:'1112 Budapest, Baradla utca 3.',handover:'2027',img:'img/baradla.jpg',imgPos:'center',
   intro:'Prémium otthonok Sasad egyik legkedveltebb, csendes utcájában, több mint 30 év tapasztalattal. A négylakásos társasház minden lakása külön albetéten szerepel, így önálló befektetésnek vagy egymás melletti családi lakásoknak is ideális. Átgondolt alaprajz, kiváló benapozottság, a belső elrendezés és a burkolatok személyre szabhatók.',
@@ -564,9 +565,9 @@ function renderProjects(){
         </div>
       </div>
     </div>
-    <div class="perks"><div class="perks-head"><span class="label">A projekt előnyei</span></div>
+    ${p.features.length?`<div class="perks"><div class="perks-head"><span class="label">A projekt előnyei</span></div>
       <ul>${p.features.map(f=>`<li><span class="perk-ic">${icon(f[0])}</span><span><strong>${esc(f[1])}</strong><small>${esc(f[2])}</small></span></li>`).join('')}</ul>
-    </div>
+    </div>`:''}
     <div class="browser">
       <div class="flatlist" role="listbox" aria-label="${esc(p.name)} lakásai">
         ${p.flats.map(f=>`<button type="button" class="flat${f.sold?' is-sold':''}" role="option" data-p="${p.id}" data-no="${f.no}">
@@ -583,8 +584,9 @@ function renderProjects(){
         <div class="detail" aria-live="polite"></div>
       </div>
     </div>
-    <div class="extras">${p.extras.map(e=>`<div><b>${esc(e[0])}</b>${esc(e[1])} · ${esc(e[2])}</div>`).join('')}</div>
-    ${p.extrasNote||p.specNote?`<p class="note pnote">${esc([p.extrasNote,p.specNote].filter(Boolean).join(' '))}</p>`:''}
+    ${p.extrasHead?`<p class="pnote phead">${esc(p.extrasHead)}</p>`:''}
+    <div class="extras">${p.extras.map(e=>`<div><b>${esc(e[0])}</b>${esc(e[1])}${e[2]?' · '+esc(e[2]):''}</div>`).join('')}</div>
+    ${p.specNote?`<p class="pnote">${esc(p.specNote)}</p>`:''}
     ${p.spec?`<details class="spec"><summary>Műszaki tartalom (kulcsrakész)</summary><dl>${p.spec.map(s=>`<dt>${esc(s[0])}</dt><dd>${esc(s[1])}</dd>`).join('')}</dl></details>`:''}
   </article>`}).join('');
   root.querySelectorAll('.flat').forEach(b=>b.addEventListener('click',()=>selectFlat(b.dataset.p,+b.dataset.no)));

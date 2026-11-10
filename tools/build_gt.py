@@ -87,15 +87,14 @@ js = s[s.find('<script>') + 8:s.rfind('</script>')]
 INTRO1 = ('Négylakásos, új építésű társasház Sasad csendes, zöld utcájában, 2027-es átadással. '
           'Minden lakás önálló albetét, így saját otthonnak és befektetésnek is jó választás. '
           'Jó tájolás, átgondolt alaprajzok; a belső elrendezésen és a burkolatokon még lehet módosítani.')
-INTRO3 = ('Új, háromlakásos társasház Sasad csendes utcájában, pinceszinti teremgarázzsal és 2028 eleji átadással. '
-          'Két tágas, négyszobás családi lakás – a földszinti télikerttel, az emeleti terasszal és erkéllyel – '
-          'és egy kétszobás, teraszos lakás a II. emeleten. Minden lakás önálló albetét.')
+INTRO3 = ('Három új lakás Sasadon, gépkocsi parkolási lehetőséggel az épület alatti pinceszinten. '
+          'Tervezett átadás: 2028. I. negyedév.')
 INTRO2 = ('Háromszintes, liftes társasház három lakással, Sasad egyik csendes zsákutcájában. '
           'Korszerű, alacsony fenntartási költségű gépészet; a belső kialakítás és a burkolatok igény szerint választhatók.')
 
 js = js.replace("gtOnly:true,", "")
 js = re.sub(r"id:'baradla6',name:'[^']*',eyebrow:'[^']*',address:'[^']*'",
-            "id:'p3',name:'Sasadi teremgarázsos társasház – 3 lakás',eyebrow:'Új projekt',address:'Budapest XI., Sasad'", js)
+            "id:'p3',name:'Sasadi új társasház – 3 lakás',eyebrow:'Új projekt',address:'Budapest XI., Sasad'", js)
 js = re.sub(r"(id:'p3'.*?intro:)'[^']*'", lambda m: m.group(1) + repr(INTRO3).replace('"', "'"), js, count=1, flags=re.S)
 js = re.sub(r"id:'baradla',name:'[^']*',eyebrow:'[^']*',address:'[^']*'",
             "id:'p1',name:'Sasadi társasház – 4 lakás',eyebrow:'Építés alatt',address:'Budapest XI., Sasad'", js)
